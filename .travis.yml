@@ -19,7 +19,6 @@ after_success:
   - docker push ramaditya/multi-client
   - docker push ramaditya/multi-server
   - docker push ramaditya/multi-nginx
-  - docker push ramaditya/multi-worker
-
+  - docker push ramaditya/multi-worker 
   #Push to hub
 
