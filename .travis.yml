@@ -1,5 +1,7 @@
 sudo: required
-services: 
+language: generic
+
+services:
   - docker
 
 before_install:
@@ -10,17 +12,16 @@ script:
 
 after_success:
   - docker build -t ramaditya/multi-client ./client
-  - docker build -t ramaditya/multi-server ./server
   - docker build -t ramaditya/multi-nginx ./nginx
+  - docker build -t ramaditya/multi-server ./server
   - docker build -t ramaditya/multi-worker ./worker
-
-  #Log in
-  - echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_ID" --password-stdin
+  # Log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take those images and push them to docker hub
   - docker push ramaditya/multi-client
-  - docker push ramaditya/multi-server
   - docker push ramaditya/multi-nginx
-  - docker push ramaditya/multi-worker 
-  #Push to hub
+  - docker push ramaditya/multi-server
+  - docker push ramaditya/multi-worker
 
 deploy:
   provider: elasticbeanstalk
